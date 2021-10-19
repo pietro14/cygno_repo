@@ -19,10 +19,14 @@ setup(
     python_requires='>=3.7',
     install_requires=[
     'boto3',
+    'boto3sts',
     'requests',
-    'xmltodict',
-    'liboidcagent',
-    'future'
+    'pandas',
+    'logging',
+    'botocore',
+    'requests',
+    'platform',
+    'optparse'
    ]
 
 )
