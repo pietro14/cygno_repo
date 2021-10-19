@@ -13,9 +13,16 @@ setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache2 License",
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.7',
+    install_requires=[
+    'boto3',
+    'requests',
+    'xmltodict',
+    'liboidcagent',
+    'future'
+   ]
 
 )
