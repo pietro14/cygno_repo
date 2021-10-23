@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+#
+# G. Mazzitelli and I. Abritta Febraury 2019
+# Tool to Upload/Download Files into/from the Swift Cloud
+# Modify by GM 2021 for S3
+#
+
+__version__ = '0.1'
+
+import re
+import sys
+import os
+
+import numpy as np
+import time
+import datetime
+from optparse import OptionParser
+import s3_function as s3
+
+
+##############################
+########### Main #############
+##############################
+def main():
+    #
+    # define available backet on remote repo
+    #
+    cygno_backet_list = ["cygnus", "cygno-data", "cygno-sim", "cygno-analysis"]
+    #
+    parser = OptionParser(usage='usage: %prog\t [-tsv] [ls backet]\n\t\t\t [put backet filename]\n\t\t\t [[get backet filein] fileout]\n\t\t\t [rm backet fileneme]\n')
+    parser.add_option('-t','--tag', dest='tag', type='string', default='', help='tag where dir for data;');
+    parser.add_option('-s','--session', dest='session', type='string', default='infncloud-iam', help='token profile [infncloud-iam];');
+    parser.add_option('-v','--verbose', dest='verbose', action="store_true", default=False, help='verbose output;');
+    (options, args) = parser.parse_args()
+    #
+    if options.verbose: 
+        print(">> resquested arguments:", args)
+        print(">> resquested options:", options)
+        if len(args)>=1:
+            print(">> funcition", args[0])
+        if len(args)==2:
+            print(">> backet", args[1])
+        if len(args)==3:
+            print(">> backet", args[2])
+    #       
+    if len(args) < 2:
+        parser.error("incorrect number of arguments")
+    if not (args[1] in cygno_backet_list):
+        error = "backet not availabe in cygno repo: "+str(cygno_backet_list)
+        parser.error(error)
+    if args[0] == 'ls':
+        s3.s3_backet_list(tag=options.tag, bucket=args[1], 
+                       session=options.session, verbose=options.verbose)
+    elif args[0] == 'put':
+        if len(args) < 3:
+            parser.error("incorrect number of arguments, no FILENAME passed")
+        else:
+            s3.s3_obj_put(filename=args[2], tag=options.tag, bucket=args[1], 
+                          session=options.session, verbose=options.verbose)
+    elif args[0] == 'get':
+        if len(args) < 3:
+            parser.error("incorrect number of arguments, no FILENAME passed")
+        else:
+            if len(args)==4:
+                fileout=args[3]
+            else:
+                fileout=args[2]
+                
+            s3.s3_obj_get(filein=args[2], fileout=fileout, tag=options.tag, bucket=args[1], 
+                          session=options.session, verbose=options.verbose)
+    elif args[0] == 'rm':
+        if len(args) < 3:
+            parser.error("incorrect number of arguments, no FILENAME passed")
+        else:
+            s3.s3_obj_rm(filename=args[2], tag=options.tag, bucket=args[1], 
+                          session=options.session, verbose=options.verbose)
+    elif args[0] == 'mv':
+        parser.error("mouve file not yet implemented, sorry...")
+    else:
+        error = args[0]+" function not avaiable"
+        parser.error(error)
+        
+if __name__ == "__main__":
+    main()
