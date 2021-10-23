@@ -4,6 +4,9 @@
 # Tool to Upload/Download Files into/from the Swift Cloud
 # Modify by GM 2021 for S3
 #
+
+__version__ = '0.1'
+
 import re
 import sys
 import os

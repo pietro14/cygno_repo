@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -10,7 +10,7 @@ setup(
     version='0.1',                          # version
     description='Packge to hadle Cygno experimet repository',      # short description
     url='https://github.com/gmazzitelli/cygno_repo',               # package URL
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache2 License",
@@ -23,11 +23,11 @@ setup(
     'boto3sts',
     'requests',
     'pandas',
-    'logging',
+#    'logging',
     'botocore',
     'requests',
-    'platform',
-    'optparse'
+#    'platform',
+#    'optparse'
    ]
 
 )
