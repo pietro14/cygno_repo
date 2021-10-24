@@ -5,7 +5,7 @@
 # Modify by GM 2021 for S3
 #
 
-__version__ = '0.1'
+__version__ = '1.0'
 
 import re
 import sys
@@ -15,7 +15,7 @@ import numpy as np
 import time
 import datetime
 from optparse import OptionParser
-import s3_function as s3
+import cygno as cy
 
 
 ##############################
@@ -49,13 +49,13 @@ def main():
         error = "backet not availabe in cygno repo: "+str(cygno_backet_list)
         parser.error(error)
     if args[0] == 'ls':
-        s3.s3_backet_list(tag=options.tag, bucket=args[1], 
+        cy.s3_backet_list(tag=options.tag, bucket=args[1], 
                        session=options.session, verbose=options.verbose)
     elif args[0] == 'put':
         if len(args) < 3:
             parser.error("incorrect number of arguments, no FILENAME passed")
         else:
-            s3.s3_obj_put(filename=args[2], tag=options.tag, bucket=args[1], 
+            cy.s3_obj_put(filename=args[2], tag=options.tag, bucket=args[1], 
                           session=options.session, verbose=options.verbose)
     elif args[0] == 'get':
         if len(args) < 3:
@@ -66,13 +66,13 @@ def main():
             else:
                 fileout=args[2]
                 
-            s3.s3_obj_get(filein=args[2], fileout=fileout, tag=options.tag, bucket=args[1], 
+            cy.s3_obj_get(filein=args[2], fileout=fileout, tag=options.tag, bucket=args[1], 
                           session=options.session, verbose=options.verbose)
     elif args[0] == 'rm':
         if len(args) < 3:
             parser.error("incorrect number of arguments, no FILENAME passed")
         else:
-            s3.s3_obj_rm(filename=args[2], tag=options.tag, bucket=args[1], 
+            cy.s3_obj_rm(filename=args[2], tag=options.tag, bucket=args[1], 
                           session=options.session, verbose=options.verbose)
     elif args[0] == 'mv':
         parser.error("mouve file not yet implemented, sorry...")

@@ -17,7 +17,7 @@ setup(
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.5',
     install_requires=[
     'boto3',
     'boto3sts',
@@ -25,6 +25,11 @@ setup(
     'pandas',
     'botocore',
     'requests',
+    'matplotlib',
+    'hdbscan',
+#    'ROOT',
+#    'root_numpy',
+#    'h5py'
    ]
 
 )

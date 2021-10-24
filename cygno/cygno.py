@@ -1,8 +1,10 @@
 #
-# Image analisys CYGNUS-RD Python Library
+# Image analisys CYGNO Python Library
 # G. Mazzitelli 2017 
 # rev oct 2018 - swift direct access 
 #
+
+__version__ = '1.0'
 
 import numpy as np
 import glob, os
@@ -14,7 +16,7 @@ class myError(Exception):
 
 
 # ############################################################################################################################ #
-# DATA Archive
+# DATA Archive old staf per BTF 2017-2019
 # ############################################################################################################################ #
 
 def logbookInfo(file, run):
@@ -102,119 +104,11 @@ def scopeFile2FullPathCygnus(dataSelection, fileNumber, traccia, ch):
     if dataSelection == 'BTF_2017-2' or dataSelection == 'LABOct2017':
         sch = 'C'+str(ch)+'Run'
     return file2FullPathCygnus(dataSelection, fileNumber, 'SCO') + sch + '%05d' % (traccia) +'.txt'
-
-
-# ############################################################################################################################ #
-# swift storage read and write
-# ############################################################################################################################ #
-
-def swift_auth():
-    # https://docs.openstack.org/python-swiftclient/latest/service-api.html
-    # https://docs.openstack.org/python-swiftclient/
-
-    import swiftclient
-    from keystoneauth1 import session
-    from keystoneauth1.identity import v3
-
-    
-    OS_PROJECT_NAME='anonymous'
-    OS_USERNAME='anonymous'
-    OS_PASSWORD='anonymous'
-    OS_AUTH_URL='https://keystone.cloud.infn.it:5000/v3/'
-    OS_REGION_NAME='canf'
-    OS_PROJECT_DOMAIN_NAME='default'
-    OS_USER_DOMAIN_NAME='default'
-    OS_IDENTITY_API_VERSION='3'
-    OS_STORAGE_URL='https://swift.cloud.infn.it:8080/v1/AUTH_1e60fe39fba04701aa5ffc0b97871ed8'
-
-
-    _auth = v3.Password(
-        user_domain_name    = OS_USER_DOMAIN_NAME,
-        project_domain_name = OS_PROJECT_DOMAIN_NAME,
-        project_name        = OS_PROJECT_NAME,
-        username            = OS_USERNAME,
-        password            = OS_PASSWORD,
-        auth_url            = OS_AUTH_URL
-    )
-    _os_options={
-        'region_name' : OS_REGION_NAME, 
-        'object_storage_url': OS_STORAGE_URL
-    }
-    # Create session
-    keystone_session = session.Session(auth = _auth)
-
-    # Create swiftclient Connection
-    swift = swiftclient.Connection(session      = keystone_session, 
-                                    auth_version = OS_IDENTITY_API_VERSION,
-                                    os_options   = _os_options
-                                    )
-    return swift
-
-def swift_auth_read_image_h5(file):
-    # https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python#Reading_Data_from_HDF5_Files
-    # dump imagine con autenticazione
-    import numpy as np
-    import h5py
-    import os
-    swift = swift_auth()
-    obj_tuple = swift.get_object("Cygnus", file)
-    tmpname = "./tmp." + str(os.getpid()) + ".h5"
-    with open(tmpname, 'wb') as my_tmp:
-            my_tmp.write(obj_tuple[1])
-    image = read_image_h5(tmpname)
-    try:
-        os.remove(tmpname)
-    except OSError:
-        pass
-    return image
-
-def swift_read_image_h5(file):
-    # dump imagine in sola lettura
-    import requests
-    import os
-    BASE_URL  = "https://swift.cloud.infn.it:8080/v1/AUTH_1e60fe39fba04701aa5ffc0b97871ed8/Cygnus/"
-
-    url = BASE_URL+file
-    r = requests.get(url)
-    tmpname = "./tmp." + str(os.getpid()) + ".h5"
-    with open(tmpname, 'wb') as tmp:
-            tmp.write(r.content)
-    image = read_image_h5(tmpname)
-    try:
-        os.remove(tmpname)
-    except OSError:
-        pass
-    return image
-
-def swift_listdir(dirname):
-    swift = swift_auth()
-    fileindir=[]
-    for data in swift.get_container("Cygnus", full_listing=True)[1]:
-        if dirname in str(data):
-            if data['name'].find("._") <= 0 : # Petch aggiunta per i cazzo di file mac...
-                fileindir.append(data['name'])
-    return fileindir
-
-def swift_noauth_listdir(dirname):
-    import requests
-    BASE_URL  = "https://swift.cloud.infn.it:8080/v1/AUTH_1e60fe39fba04701aa5ffc0b97871ed8/Cygnus/"
-    r = requests.get(BASE_URL)
-
-    r = r.content
-    string = r.decode("ISO-8859-1")
-    dati = string.split('\n')
-
-    fileindir=[]
-    for data in dati:
-        if dirname in data:
-            fileindir.append(data)
-    return fileindir
-
-
-# ############################################################################################################################ #
-# TOOLS
-# ############################################################################################################################ #
-
+#
+# WARNING removed swift repo access today replaced by S3 see next
+#
+# H5 file staff need h5py
+#
 def read_image_h5(file):
     # https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python#Reading_Data_from_HDF5_Files
     import numpy as np
@@ -231,7 +125,9 @@ def write_image_h5(file, m1):
     with h5py.File(file, 'w') as hf:
         hf.create_dataset('Image', data=m1)
     return
-
+#
+# general toot for image array
+# 
 def rebin(a, shape):
     sh = shape[0],a.shape[0]//shape[0],shape[1],a.shape[1]//shape[1]
     return a.reshape(sh).mean(-1).mean(1)
@@ -269,43 +165,10 @@ def UnderTh2Array(ArrayIn, Th):
             ThArr.append([i, ArrayIn[i], UnderTh])
     return  ThArr
 
-def swift_root_file(sel, run):
-    BASE_URL  = "https://swift.cloud.infn.it:8080/v1/AUTH_1e60fe39fba04701aa5ffc0b97871ed8/Cygnus/"
-    file_root = ('Data/'+sel+'/histograms_Run%05d.root' % run)
-    return BASE_URL+file_root
 
-def swift_fileByname(sel, filename):
-    BASE_URL  = "https://swift.cloud.infn.it:8080/v1/AUTH_1e60fe39fba04701aa5ffc0b97871ed8/Cygnus/"
-    file_tif = ('Data/'+sel+'/'+filename)
-    return BASE_URL+file_tif
-
-def s3_root_file(run, tag='LAB', posix=True):
-    if posix:
-        BASE_URL  = "/workarea/cloud-storage/cygnus/"
-    else:
-        BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygnus/"
-    file_root = ('Data/'+tag+'/histograms_Run%05d.root' % run)
-    return BASE_URL+file_root
-
-
-def swift_s3_image_h5(file):
-    # dump imagine in sola lettura
-    import requests
-    import os
-    BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygnus/"
-
-    url = BASE_URL+file
-    r = requests.get(url)
-    tmpname = "./tmp." + str(os.getpid()) + ".h5"
-    with open(tmpname, 'wb') as tmp:
-            tmp.write(r.content)
-    image = read_image_h5(tmpname)
-    try:
-        os.remove(tmpname)
-    except OSError:
-        pass
-    return image
-
+#
+################## General TOOL for S3 ##############
+#
 def reporthook(blocknum, blocksize, totalsize):
     import sys
     readsofar = blocknum * blocksize
@@ -319,42 +182,203 @@ def reporthook(blocknum, blocksize, totalsize):
     else: # total size is unknown
         sys.stderr.write("read %d\n" % (readsofar,))
         
-def swift_read_root_file(url):
-    import ROOT
-    import os
-    import urllib
-    from platform import python_version
-    
-    tmpname = "./tmp." + str(os.getpid()) + ".root"
-    
-    if python_version().split('.')[0]=='3':
-        urllib.request.urlretrieve(url, tmpname, reporthook)
-    else:
-        urllib.urlretrieve(url, tmpname, reporthook)
 
-    f  = ROOT.TFile.Open(tmpname);
-    os.remove(tmpname)
-    return f   
+def kb2valueformat(val):
+    import numpy as np
+    if int(val/1024./1024/1024.)>0:
+        return val/1024./1024./1024., "Gb"
+    if int(val/1024./1024.)>0:
+        return val/1024./1024., "Mb"
+    if int(val/1024.)>0:
+        return val/1024., "Kb"
+    return val, "byte"
+############################    
 
-def swift_download_file(url):
-    import os
-    import urllib
-    from platform import python_version
-    
-    tmpname = "./tmp." + str(os.getpid()) + ".root"
-    
-    if python_version().split('.')[0]=='3':
-        urllib.request.urlretrieve(url, tmpname, reporthook)
+def s3_root_file(run, tag='LAB', posix=True):
+    if posix:
+        BASE_URL  = "/workarea/cloud-storage/cygnus/"
     else:
-        urllib.urlretrieve(url, tmpname, reporthook)
+        #BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygnus/"
+        BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygno-data/"
+    file_root = (tag+'/histograms_Run%05d.root' % run)
+    return BASE_URL+file_root
+
+
+def s3_backet_list(tag, bucket='cygno-sim', session="infncloud-iam", verbose=False):
+    import boto3
+    from boto3sts import credentials as creds
+
+    endpoint='https://minio.cloud.infn.it/'
+    version='s3v4'
+    key = tag+'/'
+    if verbose: print(">> listing", tag, "on backet", bucket, "for session",  session, "\n")
+    aws_session = creds.assumed_session(session)
+    s3 = aws_session.client('s3', endpoint_url=endpoint,
+                            config=boto3.session.Config(signature_version=version),verify=True)
+    response = s3.list_objects(Bucket=bucket)['Contents']
+    for i, file in enumerate(response):
+        if key in str(file['Key']):
+            print("{0:20s} {1:s}".format(str(file['LastModified']).split(".")[0].split("+")[0], file['Key']))
+
+def s3_obj_put(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False):
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html#uploading-files
+    import boto3
+    from boto3sts import credentials as creds
+    import logging
+    import botocore
+    import requests
+    import os
+    #
+    endpoint='https://minio.cloud.infn.it/'
+    version='s3v4'
+    #
+    if verbose: print(">> upload", filename,"taged", tag, "on backet", bucket, "for session",  session, "\n")
+    aws_session = creds.assumed_session(session)
+    s3 = aws_session.client('s3', endpoint_url=endpoint, config=boto3.session.Config(signature_version=version),verify=True)
+
+    key = tag+'/'
+
+    # Upload the file
+    
+    try:
+        response=s3.head_object(Bucket=bucket,Key=key+filename)
+        value, unit = kb2valueformat(response['ContentLength'])
+        print("The file already exists and has a dimension of {:.2f} {:s}".format(value, unit))
+        #print("The file already exists and has a dimension of "+str(response['ContentLength']/1024./1024.)+' MB')
+        return True, False
+    
+    except (botocore.exceptions.ConnectionError, requests.exceptions.ConnectionError):
+        print("There was a connection error or failed")
+        return False, False
+
+    except botocore.exceptions.ClientError:
         
-    return tmpname
+        if verbose: print('No file with this name was found on the cloud, it will be uploaded')
+        try:
+            out = key+os.path.basename(filename)
+            response = s3.upload_file(filename, bucket, out)
+            if verbose: print ('Uploaded file: '+out)
+        except Exception as e:
+            logging.error(e)
+            return False, False
+        return True, True
 
+def s3_obj_get(filein, fileout, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False):
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html#uploading-files
+    import boto3
+    from boto3sts import credentials as creds
+    import logging
+    import botocore
+    import requests
+    import os
+    #
+    endpoint='https://minio.cloud.infn.it/'
+    version='s3v4'
+    #
+    if verbose: print(">> get", filein, fileout,"taged", tag, "on backet", bucket, "for session",  session, "\n")
+    aws_session = creds.assumed_session(session)
+    s3 = aws_session.client('s3', endpoint_url=endpoint, config=boto3.session.Config(signature_version=version),verify=True)
 
-def rm_file(filein):
-    command = '/bin/rm ' + filein
+    key = tag+'/'
+
+    # Download the file
+    
+    try:
+        response=s3.head_object(Bucket=bucket,Key=key+filein)
+        value, unit = kb2valueformat(response['ContentLength'])
+        print("downloading file of {:.2f} {:s}...".format(value, unit))    
+    except (botocore.exceptions.ConnectionError, requests.exceptions.ConnectionError):
+        print("There was a connection error or failed")
+        return False
+
+    except botocore.exceptions.ClientError:
+        print('No file with this'+fielneme+'was found on the cloud')
+        return False
+    try:
+        object_in = key+filein
+        response = s3.download_file(bucket, object_in, fileout)
+        if verbose: print ('Downloaded file: '+fileout)
+        return True
+    except Exception as e:
+        logging.error(e)
+        return False
+
+def s3_obj_rm(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False):
+    # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html#uploading-files
+    import boto3
+    from boto3sts import credentials as creds
+    import logging
+    import botocore
+    import requests
+    import os
+    #
+    endpoint='https://minio.cloud.infn.it/'
+    version='s3v4'
+    #
+    if verbose: print(">> get", filein, fileout,"taged", tag, "on backet", bucket, "for session",  session, "\n")
+    aws_session = creds.assumed_session(session)
+    s3 = aws_session.client('s3', endpoint_url=endpoint, config=boto3.session.Config(signature_version=version),verify=True)
+
+    key = tag+'/'
+
+    # Download the file
+    
+    try:
+        response=s3.head_object(Bucket=bucket,Key=key+filename)
+        value, unit = kb2valueformat(response['ContentLength'])
+        print("removing file of {:.2f} {:s}...".format(value, unit))    
+    except (botocore.exceptions.ConnectionError, requests.exceptions.ConnectionError):
+        print("There was a connection error or failed")
+        return False
+
+    except botocore.exceptions.ClientError:
+        print('No file with this'+fielneme+'was found on the cloud')
+        return False
+    try:
+        object_in = key+filename
+        response = s3.delete_object(Bucket=bucket,Key=object_in)
+        print ('removed file: '+filename)
+        return True
+    except Exception as e:
+        logging.error(e)
+        return False
+
+############# general TOOL for file #############
+
+def mv_file(filein, fileout):
+    import os
+    command = '/bin/mv '+ filein +' '+ fileout
     return os.system(command)
 
+def cp_file(filein, fileout):
+    import os
+    command = '/bin/cp '+ filein +' '+ fileout
+    return os.system(command)
+
+def rm_file(filein):
+    import os
+    command = '/bin/rm '+ filein
+    return os.system(command)
+
+def grep_file(what, filein):
+    import subprocess
+    command = '/usr/bin/grep ' + what +' '+filein
+    status, output = subprocess.getstatusoutput(command)
+    return output
+
+def mkdir_file(folder):
+    import os
+    command = '/bin/mkdir -p '+ folder
+    return os.system(command)
+
+
+def append2file(line, filein):
+    import os
+    command = 'echo '+ line + ' >> '+filein
+    return os.system(command)
+#
+# ROOT cygno tool
+#
 def root_TH2_name(root_file):
     pic = []
     wfm = []
@@ -365,7 +389,6 @@ def root_TH2_name(root_file):
         elif ('wfm_run' in str(che)):
             wfm.append(che)
     return pic, wfm
-
 
 
 def cluster_par(xc, yc, image):
