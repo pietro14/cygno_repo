@@ -212,7 +212,7 @@ def s3_root_file(run, tag='LAB', posix=True):
     if posix:
         BASE_URL  = "/workarea/cloud-storage/cygno-data/"
         if run <= 4504:
-            BASE_URL  = "/workarea/cloud-storage/cygno/Data/LAB/"
+            BASE_URL  = "/workarea/cloud-storage/cygno/Data/"
     else:
         BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygno-data/"
     file_root = (tag+'/histograms_Run%05d.root' % run)
