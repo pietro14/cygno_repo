@@ -210,9 +210,8 @@ def kb2valueformat(val):
 
 def s3_root_file(run, tag='LAB', posix=True):
     if posix:
-        BASE_URL  = "/workarea/cloud-storage/cygnus/"
+        BASE_URL  = "/workarea/cloud-storage/cygno-data/"
     else:
-        #BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygnus/"
         BASE_URL  = "https://s3.cloud.infn.it/v1/AUTH_2ebf769785574195bde2ff418deac08a/cygno-data/"
     file_root = (tag+'/histograms_Run%05d.root' % run)
     return BASE_URL+file_root
