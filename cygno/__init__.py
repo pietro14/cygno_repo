@@ -1326,7 +1326,7 @@ def read_cygno_sql_logbook(run, verbose=False):
 
 def run_info_logbook(run, sql=True, verbose=True):
     if sql:
-        return dataInfo=read_cygno_sql_logbook(run, verbose=False)
+        return read_cygno_sql_logbook(run, verbose=False)
     else:
         dataInfo=read_cygno_logbook(verbose=False)
         if verbose: print(dataInfo[dataInfo.File_Number==str(run)].iloc[0,3:19])
