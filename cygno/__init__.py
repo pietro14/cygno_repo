@@ -1163,11 +1163,11 @@ def write2root(fname, img, id=0, option='update'):
 ##########################################
 
 class cfile:
-    def __init__(self, file, pic, wfm, max_image, max_wfm, x_resolution, y_resolution):
+    def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
         self.file         = file
         self.pic          = pic 
         self.wfm          = wfm
-        self.max_image    = max_image
+        self.max_pic      = max_pic
         self.max_wfm      = max_wfm
         self.x_resolution = x_resolution
         self.y_resolution = y_resolution
@@ -1175,13 +1175,22 @@ class cfile:
 def open_(run, tag='LAB', posix=False, verbose=True):
     import ROOT
     import root_numpy as rtnp
+    class cfile:
+        def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
+            self.file         = file
+            self.pic          = pic 
+            self.wfm          = wfm
+            self.max_pic      = max_pic
+            self.max_wfm      = max_wfm
+            self.x_resolution = x_resolution
+            self.y_resolution = y_resolution
     try:
         f=ROOT.TFile.Open(s3_root_file(run, tag, posix=posix))
         pic, wfm = root_TH2_name(f)
         image = rtnp.hist2array(f.Get(pic[0])).T
         x_resolution = image.shape[1]
         y_resolution = image.shape[0]
-        max_image = len(pic)
+        max_pic = len(pic)
         max_wfm = len(wfm)
     except:
         raise myError("openFileError: "+s3_root_file(run, tag, posix=posix))
@@ -1190,10 +1199,11 @@ def open_(run, tag='LAB', posix=False, verbose=True):
     if verbose:
         print ('Open file: '+s3_root_file(run, tag, posix=posix))
         print ('Find Keys: '+str(len(f.GetListOfKeys())))
-        print ("# of Images (TH2) Files: %d " % (max_image))
+        print ("# of Images (TH2) Files: %d " % (max_pic))
         print ("# of Waveform (TH2) Files: %d " % (max_wfm))
         print ('Camera X, Y pixel: {:d} {:d} '.format(x_resolution, y_resolution))
-    return cfile(f, pic, wfm, max_image, max_wfm, x_resolution, y_resolution)
+    return cfile(f, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution)
+
 
 def read_(f, iTr):
     import ROOT
