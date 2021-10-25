@@ -25,4 +25,5 @@ before run the script rember to run:
       oidc-gen --reauthenticate --flow device infncloud-iam (if you alrady have the token)
 
 install the CYGNO library:
+
       pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
