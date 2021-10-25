@@ -206,6 +206,7 @@ def kb2valueformat(val):
     if int(val/1024.)>0:
         return val/1024., "Kb"
     return val, "byte"
+
 ############################    
 
 def s3_root_file(run, tag='LAB', posix=True):
@@ -394,7 +395,7 @@ def append2file(line, filein):
     command = 'echo '+ line + ' >> '+filein
     return os.system(command)
 #
-# ROOT cygno tool
+# ROOT cygno tool and image tool
 #
 def root_TH2_name(root_file):
     pic = []
@@ -1275,7 +1276,62 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         write_image_h5(fileouts, s_image)
         if verbose: print("DONE OUTPUT on files: %s, %s", (fileoutm, fileouts))
         return m_image, s_image
+
     
+
+def read_cygno_logbook(verbose=False):
+    import pandas as pd
+    import numpy as np
+    key="1y7KhjmAxXEgcvzMv9v3c0u9ivZVylWp7Z_pY3zyL9F8" # Log Book
+    url_csv_file = "https://docs.google.com/spreadsheet/ccc?key="+key+"&output=csv"
+    df = pd.read_csv(url_csv_file)
+    df = df[df.File_Number.isnull() == False]
+    for name in df.columns:
+        if name.startswith('Unnamed:'):
+            df=df.drop([name], axis=1)
+    isacomment = False
+    runp = df.File_Number[0]
+    for run in df.File_Number:
+    
+        if not run.isnumeric():
+            if isacomment == False and verbose: print("To Run {}".format(runp)) 
+            isacomment = True
+            if verbose: print ("--> General comment: {}".format(run))
+            index = df[df.File_Number==run].index[0]
+            df=df.drop([index], axis=0)
+        else:
+            if isacomment and verbose: print("From Run {}".format(run)); isacomment = False
+        runp = run
+    if verbose: print ('Variables: ', df.columns.values)
+    return df
+
+def read_cygno_sql_logbook(run, verbose=False):
+    import requests
+    import pandas as pd
+    url = "https://lnf.infn.it/~mazzitel/php/cygno_sql_query.php?run="+str(run)
+    url = "http://www.lnf.infn.it/acceleratori/php/cygno_sql_query.php?run="+str(run)
+
+    r = requests.get(url, verify=False)
+    data  = r.text.split("\n(\n    ")[-1].split('\n)\n')[0].split("\n    ")
+
+    columns = ["varible", "value"]
+    df = pd.DataFrame(columns = columns)
+
+    for i, value in enumerate(data):
+        dv = value.split(" => ")
+        if verbose: print (dv[0][1:-1]+"\t\t"+dv[1])
+        df  = df.append({columns[0]:dv[0][1:-1], columns[1]:dv[1]},
+                    ignore_index=True)
+    return df
+
+def run_info_logbook(run, sql=True, verbose=True):
+    if sql:
+        return dataInfo=read_cygno_sql_logbook(run, verbose=False)
+    else:
+        dataInfo=read_cygno_logbook(verbose=False)
+        if verbose: print(dataInfo[dataInfo.File_Number==str(run)].iloc[0,3:19])
+        return dataInfo[dataInfo.File_Number==str(run)].iloc[0,3:19]
+
     
 def img_proj(img, vmin, vmax, log=False):
     import matplotlib.pyplot as plt
