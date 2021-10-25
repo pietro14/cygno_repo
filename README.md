@@ -17,8 +17,13 @@ tools to handle cygno repository
 before run the script rember to run:
 
       eval `oidc-agent`
-      oidc-token infncloud-iam
+      oidc-token infncloud-iam (first time)
  
- and eventualy refresh the token
+ or eventualy refresh the token
  
-      oidc-gen --reauthenticate --flow device infncloud-iam
+      eval `oidc-agent`
+      oidc-gen --reauthenticate --flow device infncloud-iam (if you alrady have the token)
+
+install the CYGNO library:
+
+      pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
