@@ -1241,7 +1241,7 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         except:
             raise myError("openRunError: "+str(run))
         if max_image_to_read == 0:
-            max_image_to_read=cfile.max_image
+            max_image_to_read=cfile.max_pic
         print ("WARNING: pdestal from %d to %d" % (min_image_to_read, max_image_to_read))
 
         m_image = np.zeros((cfile.x_resolution, cfile.y_resolution), dtype=np.float64)
