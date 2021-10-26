@@ -1,7 +1,7 @@
 # CYGNO library
 tools to handle cygno repository, image, ecc.
 
-## CYGNO CLI Tools cygno_repo
+## CYGNO CLI Tool *cygno_repo*
 
 * configure *oidc-agent* on your machine: https://codimd.web.cern.ch/s/SL-cWzDZB (DAQ setup, expert only https://codimd.web.cern.ch/s/_XqFfF_7V)
 * example for osx
