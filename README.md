@@ -31,10 +31,19 @@ install the CYGNO library:
 
       pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
 
-      Usage: cygno_repo	 [-tsv] [ls backet]
-			 [put backet filename]
-			 [[get backet filein] fileout]
-			 [rm backet fileneme]
+usage
+
+	Usage: cygno_repo	 [-tsv] [ls backet]
+				 [put backet filename]
+				 [[get backet filein] fileout]
+				 [rm backet fileneme]
+	
+	
+	Options:
+	  -h, --help            	show this help message and exit
+	  -t TAG, --tag=TAG     	tag where dir for data;
+	  -s SESSION, --session=SESSION	token profile [infncloud-iam];
+	  -v, --verbose         	verbose output;
                    
 example:
 
