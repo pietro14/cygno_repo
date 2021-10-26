@@ -1205,6 +1205,20 @@ def open_(run, tag='LAB', posix=False, verbose=True):
         print ('Camera X, Y pixel: {:d} {:d} '.format(x_resolution, y_resolution))
     return cfile(f, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution)
 
+
+
+def TGraph2array(tgraph):
+    import ctypes
+    xl = []; yl = []
+    for i in range(tgraph.GetN()):
+        xi = ctypes.c_double(); yi = ctypes.c_double()
+        tgraph.GetPoint(i,xi,yi)
+        xl.append(xi.value)
+        yl.append(yi.value)
+    x = np.array(xl)
+    y = np.array(yl)
+    return x, y
+
 def pic_(cfile, iTr):
     import ROOT
     import root_numpy as rtnp
