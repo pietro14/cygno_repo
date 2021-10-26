@@ -9,20 +9,20 @@ tools to handle cygno repository, image, ecc.
       brew tap indigo-dc/oidc-agent
       brew install oidc-agent
 
-* and then install the IAM-Profile (not WLCG-Profile token) as reported in the second part of the guide https://codimd.web.cern.ch/s/SL-cWzDZB
+* install the IAM-Profile (not WLCG-Profile token) as reported in the second part of the guide https://codimd.web.cern.ch/s/SL-cWzDZB
 
-* installa python library  (raw example https://github.com/DODAS-TS/boto3sts): 
+* install python library  (https://github.com/DODAS-TS/boto3sts): 
 
       pip3 install -U git+https://github.com/DODAS-TS/boto3sts
       
 * see https://boto3.amazonaws.com/v1/documentation/api/latest/index.html for S3 documentation
 
-before run the script rember to run:
+before run the script carte the iam token:
 
       eval `oidc-agent`
-      oidc-token infncloud-iam (first time)
+      oidc-token infncloud-iam (only first time)
  
- or eventualy refresh the token
+or refresh the token
  
       eval `oidc-agent`
       oidc-gen --reauthenticate --flow device infncloud-iam (if you alrady have the token)
@@ -30,3 +30,27 @@ before run the script rember to run:
 install the CYGNO library:
 
       pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
+
+      Usage: cygno_repo	 [-tsv] [ls backet]
+			 [put backet filename]
+			 [[get backet filein] fileout]
+			 [rm backet fileneme]
+                   
+example:
+
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
+      2021-10-17 10:03:21  test/s3_list.py
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo put cygno-sim s3_function.py -t test
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
+      2021-10-26 16:36:03  test/s3_function.py
+      2021-10-17 10:03:21  test/s3_list.py
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo get cygno-sim s3_function.py -t test
+      downloading file of 5.82 Kb...
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
+      2021-10-26 16:36:03  test/s3_function.py
+      2021-10-17 10:03:21  test/s3_list.py
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo rm cygno-sim s3_function.py -t test
+      removing file of 5.82 Kb...
+      removed file: s3_function.py
+      Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
+      2021-10-17 10:03:21  test/s3_list.py
