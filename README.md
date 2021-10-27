@@ -65,6 +65,35 @@ example:
       2021-10-17 10:03:21  test/s3_list.py
       
 ## CYGNO library tool
+
+### data
+
+	class cfile:
+    		def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
+        		self.file         = file
+        		self.pic          = pic 
+        		self.wfm          = wfm
+        		self.max_pic      = max_pic
+        		self.max_wfm      = max_wfm
+        		self.x_resolution = x_resolution
+       			self.y_resolution = y_resolution
+
+* open_(run, tag='LAB', posix=False, verbose=True) open cygno ROOT file from rempte or on cloud posix like access and return cfile type
+* read_(f, iTr) return image array from file poiter
+* pic_(cfile, iTr=0) return immage array of track iTr from cfile
+* wfm_(cfile, iTr=0, iWf=0) return amplitude and time of iTr track and iWr waveform from cfile
+* ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, max_image_to_read = 0, verbose=False) return avarege and sigma imege of pedestal runs
+
+### logbook 
 * read_cygno_logbook(verbose=False) 		ruturn pandas db old google sheet logbook info
 * read_cygno_sql_logbook(verbose=False)		return pandas db sql logbook info
 * run_info_logbook(run, sql=True, verbose=True)	return pandas db google/sql run [int] info
+
+### s3 repo
+* s3_root_file(run, tag='LAB', posix=False, verbose=False)
+* s3_backet_list(tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3_obj_put(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3_obj_get(filein, fileout, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3_obj_rm(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+
+
