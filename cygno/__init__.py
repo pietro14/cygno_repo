@@ -25,6 +25,7 @@ import numpy as np
 import glob, os
 import re
 import sys
+from cygno import s3
 
 class myError(Exception):
     pass
@@ -101,7 +102,7 @@ def open_(run, tag='LAB', posix=False, verbose=True):
             self.x_resolution = x_resolution
             self.y_resolution = y_resolution
     try:
-        f=ROOT.TFile.Open(s3_root_file(run, tag, posix=posix))
+        f=ROOT.TFile.Open(s3.root_file(run, tag, posix=posix))
         pic, wfm = root_TH2_name(f)
         image = rtnp.hist2array(f.Get(pic[0])).T
         x_resolution = image.shape[1]
@@ -109,11 +110,11 @@ def open_(run, tag='LAB', posix=False, verbose=True):
         max_pic = len(pic)
         max_wfm = len(wfm)
     except:
-        raise myError("openFileError: "+s3_root_file(run, tag, posix=posix))
+        raise myError("openFileError: "+s3.root_file(run, tag, posix=posix))
     
 
     if verbose:
-        print ('Open file: '+s3_root_file(run, tag, posix=posix))
+        print ('Open file: '+s3.root_file(run, tag, posix=posix))
         print ('Find Keys: '+str(len(f.GetListOfKeys())))
         print ("# of Images (TH2) Files: %d " % (max_pic))
         print ("# of Waveform (TH2) Files: %d " % (max_wfm))
