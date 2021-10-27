@@ -63,3 +63,8 @@ example:
       removed file: s3_function.py
       Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
       2021-10-17 10:03:21  test/s3_list.py
+      
+## CYGNO library tool
+* read_cygno_logbook(verbose=False) 		ruturn pandas db old google sheet logbook info
+* read_cygno_sql_logbook(verbose=False)		return pandas db sql logbook info
+* run_info_logbook(run, sql=True, verbose=True)	return pandas db google/sql run info
