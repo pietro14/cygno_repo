@@ -160,14 +160,14 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     # funzione per fare i piedistalli se gia' non esistino nella diretory
 #    fileoutm = (path+"run%d_mean.h5" % (run))
 #    fileouts = (path+"run%d_sigma.h5" % (run))
-    fileoutm = (path+"run%d_mean.root" % (run))
-    fileouts = (path+"run%d_sigma.root" % (run))
+    fileoutm = (path+"mean_Run{:5d}".format(run))
+    fileouts = (path+"sigma_Run(:5d)".format(run))
 
     try: 
         # i file gia' esistono
         print (fileoutm, fileouts)
-        m_image = read_(fileoutm)
-        s_image = read_(fileouts)
+        m_image = read_(fileoutm+".root")
+        s_image = read_(fileouts+".root")
         return m_image, s_image
     except:
         # i file non esistono crea il file delle medie e delle sigma per ogni pixel dell'immagine
@@ -208,8 +208,8 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         ###### print Info and Save OutPut ######################################
 
         if verbose: print ("sigma %f" % (s_image[200,200]))
-        write2root(fileoutm, m_image, id=0, option='update')
-        write2root(fileouts, s_image, id=0, option='update')
+        write2root(fileoutm, m_image, id=0, option='recreate')
+        write2root(fileouts, s_image, id=0, option='recreate')
         # write_image_h5(fileoutm, m_image)
         # write_image_h5(fileouts, s_image)
         if verbose: print("DONE OUTPUT on files: %s, %s", (fileoutm, fileouts))
