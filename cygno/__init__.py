@@ -160,8 +160,8 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     # funzione per fare i piedistalli se gia' non esistino nella diretory
 #    fileoutm = (path+"run%d_mean.h5" % (run))
 #    fileouts = (path+"run%d_sigma.h5" % (run))
-    fileoutm = (path+"mean_Run{:5d}".format(run))
-    fileouts = (path+"sigma_Run(:5d)".format(run))
+    fileoutm = (path+"mean_Run{:05d}".format(run))
+    fileouts = (path+"sigma_Run(:05d)".format(run))
 
     try: 
         # i file gia' esistono
