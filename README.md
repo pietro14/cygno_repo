@@ -78,10 +78,10 @@ example:
         		self.x_resolution = x_resolution
        			self.y_resolution = y_resolution
 
-* open_(run, tag='LAB', posix=False, verbose=True) open cygno ROOT file from rempte or on cloud posix like access and return cfile type
-* read_(f, iTr) return image array from file poiter
-* pic_(cfile, iTr=0) return immage array of track iTr from cfile
-* wfm_(cfile, iTr=0, iWf=0) return amplitude and time of iTr track and iWr waveform from cfile
+* open_(run, tag='LAB', posix=False, verbose=True) 	open cygno ROOT file from rempte or on cloud posix like access and return cfile type
+* read_(f, iTr) 					return image array from file poiter
+* pic_(cfile, iTr=0) 					return immage array of track iTr from cfile
+* wfm_(cfile, iTr=0, iWf=0) 				return amplitude and time of iTr track and iWr waveform from cfile
 * ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, max_image_to_read = 0, verbose=False) return avarege and sigma imege of pedestal runs
 
 ### logbook 
@@ -90,10 +90,10 @@ example:
 * run_info_logbook(run, sql=True, verbose=True)	return pandas db google/sql run [int] info
 
 ### s3 repo
-* s3_root_file(run, tag='LAB', posix=False, verbose=False)
-* s3_backet_list(tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
-* s3_obj_put(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
-* s3_obj_get(filein, fileout, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
-* s3_obj_rm(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3.root_file(run, tag='LAB', posix=False, verbose=False)
+* s3.backet_list(tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3.obj_put(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3.obj_get(filein, fileout, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
+* s3.obj_rm(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
 
 
