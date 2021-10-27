@@ -7,7 +7,7 @@ setup(
     name='cygno',                                            # package name
     author="Giovanni Mazzitelli",
     author_email="giovanni.mazzitelli@lnf.infn.it",
-    version='1.0',                          # version
+    version='1.0.1',                          # version
     description='Cygno Experiment Python Packge',      # short description
     url='https://github.com/gmazzitelli/cygno_repo',               # package URL
     packages=find_packages(),
@@ -27,9 +27,9 @@ setup(
     'botocore',
     'requests',
     'matplotlib',
-    'hdbscan',
+#    'hdbscan',
 #    'ROOT',
-#    'root_numpy',
+    'root_numpy',
 #    'h5py'
    ]
 
