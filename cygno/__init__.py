@@ -59,6 +59,7 @@ class myError(Exception):
 def write2root(fname, img, id=0, option='update'):
     import ROOT
     tf = ROOT.TFile.Open(fname+'.root', option)
+    img=img.T
     (nx,ny) = img.shape
     h2 = ROOT.TH2D('pic_run',fname+'_'+str(id),nx,0,nx,ny,0,ny)
     h2.GetXaxis().SetTitle('x')
