@@ -160,18 +160,18 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     import numpy as np
     import tqdm
     # funzione per fare i piedistalli se gia' non esistino nella diretory
-#    fileoutm = (path+"run%d_mean.h5" % (run))
-#    fileouts = (path+"run%d_sigma.h5" % (run))
+
     fileoutm = (path+"mean_Run{:05d}".format(run))
     fileouts = (path+"sigma_Run{:05d}".format(run))
 
-    try: 
+    if (os.path.exists(fileoutm+".root") and os.path.exists(fileouts+".root")) 
         # i file gia' esistono
+        
         m_image = read_(ROOT.TFile.Open(fileoutm+".root"))
         s_image = read_(ROOT.TFile.Open(fileouts+".root"))
         print("RELOAD maen file: {:s} sigma file: {:s}".format(fileoutm, fileouts))
         return m_image, s_image
-    except:
+    else:
         # i file non esistono crea il file delle medie e delle sigma per ogni pixel dell'immagine
         if verbose: print (">>> Pedestal Maker! <<<")
         try:
