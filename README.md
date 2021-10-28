@@ -76,13 +76,13 @@ example:
         		self.max_pic      = max_pic
         		self.max_wfm      = max_wfm
         		self.x_resolution = x_resolution
-       			self.y_resolution = y_resolution
+			self.y_resolution = y_resolution
 
-* open_(run, tag='LAB', posix=False, verbose=True) 	open cygno ROOT file from rempte or on cloud posix like access and return cfile type
-* read_(f, iTr) 					return image array from file poiter
-* pic_(cfile, iTr=0) 					return immage array of track iTr from cfile
-* wfm_(cfile, iTr=0, iWf=0) 				return amplitude and time of iTr track and iWr waveform from cfile
-* ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, max_image_to_read = 0, verbose=False) cerate (if not exist) root file image of mean and sigma for each pixel and return main and sigma imege of pedestal runs
+* open_(run, tag='LAB', posix=False, verbose=True) - open cygno ROOT file from remote or on cloud posix like access and return cfile class type
+* read_(f, iTr) - return image array from file poiter
+* pic_(cfile, iTr=0) - return immage array of track iTr from cfile
+* wfm_(cfile, iTr=0, iWf=0) - return amplitude and time of iTr track and iWr waveform from cfile
+* ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, max_image_to_read = 0, verbose=False) - cerate (if not exist) root file image of mean and sigma for each pixel and return main and sigma imege of pedestal runs
 
 ### logbook 
 * read_cygno_logbook(verbose=False) 		ruturn pandas db old google sheet logbook info
