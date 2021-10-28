@@ -165,9 +165,9 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
 
     try: 
         # i file gia' esistono
-        print (fileoutm, fileouts)
-        m_image = read_(fileoutm+".root")
-        s_image = read_(fileouts+".root")
+        print (fileoutm+".root", fileouts+".root")
+        m_image = read_(ROOT.TFile.Open(fileoutm+".root"))
+        s_image = read_(ROOT.TFile.Open(fileouts+".root"))
         return m_image, s_image
     except:
         # i file non esistono crea il file delle medie e delle sigma per ogni pixel dell'immagine
