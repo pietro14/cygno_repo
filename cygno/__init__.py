@@ -166,9 +166,9 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
 
     try: 
         # i file gia' esistono
-        print (fileoutm+".root", fileouts+".root")
         m_image = read_(ROOT.TFile.Open(fileoutm+".root"))
         s_image = read_(ROOT.TFile.Open(fileouts+".root"))
+        print("RELOAD maen file: {:s} sigma file: {:s}".format(fileoutm, fileouts))
         return m_image, s_image
     except:
         # i file non esistono crea il file delle medie e delle sigma per ogni pixel dell'immagine
@@ -207,12 +207,10 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         
        
         ###### print Info and Save OutPut ######################################
-
+        print("WRITING ...")
         write2root(fileoutm, m_image, id=0, option='recreate')
         write2root(fileouts, s_image, id=0, option='recreate')
-        # write_image_h5(fileoutm, m_image)
-        # write_image_h5(fileouts, s_image)
-        print("DONE OUTPUT on files: %s, %s", (fileoutm, fileouts))
+        print("DONE OUTPUT maen file: {:s} sigma file: {:s}".format(fileoutm, fileouts))
         return m_image, s_image    
 
 def read_cygno_logbook(verbose=False):
