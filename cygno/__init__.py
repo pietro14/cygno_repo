@@ -164,7 +164,7 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     fileoutm = (path+"mean_Run{:05d}".format(run))
     fileouts = (path+"sigma_Run{:05d}".format(run))
 
-    if (os.path.exists(fileoutm+".root") and os.path.exists(fileouts+".root")) 
+    if (os.path.exists(fileoutm+".root") and os.path.exists(fileouts+".root")): 
         # i file gia' esistono
         
         m_image = read_(ROOT.TFile.Open(fileoutm+".root"))
