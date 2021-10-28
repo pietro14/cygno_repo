@@ -30,6 +30,7 @@ setup(
 #    'hdbscan',
 #    'ROOT',
     'root_numpy',
+    'tqdm'
 #    'h5py'
    ]
 

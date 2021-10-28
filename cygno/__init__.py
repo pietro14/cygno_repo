@@ -157,6 +157,7 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     import ROOT
     import root_numpy as rtnp
     import numpy as np
+    import tqdm
     # funzione per fare i piedistalli se gia' non esistino nella diretory
 #    fileoutm = (path+"run%d_mean.h5" % (run))
 #    fileouts = (path+"run%d_sigma.h5" % (run))
@@ -184,12 +185,11 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         s_image = np.zeros((cfile.x_resolution, cfile.y_resolution), dtype=np.float64)
 
         n0 = 0
-        for iTr in range(min_image_to_read, max_image_to_read):
+        for iTr in tqdm.tqdm(range(min_image_to_read, max_image_to_read)):
             image = rtnp.hist2array(cfile.file.Get(cfile.pic[iTr])).T
             image[image<0]=99 #pach per aclune imagini
             m_image += image
             s_image += image**2 
-            if n0 % 10==0:print ('*'),
             if verbose and n0 > 0 and n0 % 10==0:  # print progress and debung info for poit 200, 200...
                 print ("Debug Image[200,200]: %d => %.2f %.2f %.2f " % (iTr,
                                                 image[200,200],
@@ -208,12 +208,11 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
        
         ###### print Info and Save OutPut ######################################
 
-        if verbose: print ("sigma %f" % (s_image[200,200]))
         write2root(fileoutm, m_image, id=0, option='recreate')
         write2root(fileouts, s_image, id=0, option='recreate')
         # write_image_h5(fileoutm, m_image)
         # write_image_h5(fileouts, s_image)
-        if verbose: print("DONE OUTPUT on files: %s, %s", (fileoutm, fileouts))
+        print("DONE OUTPUT on files: %s, %s", (fileoutm, fileouts))
         return m_image, s_image    
 
 def read_cygno_logbook(verbose=False):
