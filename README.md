@@ -69,13 +69,13 @@ example:
 ### data
 
 	class cfile:
-    		def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
-        		self.file         = file
-        		self.pic          = pic 
-        		self.wfm          = wfm
-        		self.max_pic      = max_pic
-        		self.max_wfm      = max_wfm
-        		self.x_resolution = x_resolution
+		def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
+			self.file         = file
+			self.pic          = pic 
+			self.wfm          = wfm
+			self.max_pic      = max_pic
+			self.max_wfm      = max_wfm
+			self.x_resolution = x_resolution
 			self.y_resolution = y_resolution
 
 * open_(run, tag='LAB', posix=False, verbose=True) - open cygno ROOT file from remote or on cloud posix like access and return cfile class type
