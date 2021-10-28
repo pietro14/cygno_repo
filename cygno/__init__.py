@@ -189,6 +189,7 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
             image[image<0]=99 #pach per aclune imagini
             m_image += image
             s_image += image**2 
+            if n0 % 10==0:print ('*'),
             if verbose and n0 > 0 and n0 % 10==0:  # print progress and debung info for poit 200, 200...
                 print ("Debug Image[200,200]: %d => %.2f %.2f %.2f " % (iTr,
                                                 image[200,200],
