@@ -203,47 +203,44 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
         print("DONE OUTPUT maen file: {:s} sigma file: {:s}".format(fileoutm, fileouts))
         return m_image, s_image    
 
-def read_cygno_logbook(verbose=False):
+def read_cygno_logbook(sql=True, verbose=False):
     import pandas as pd
     import numpy as np
-    key="1y7KhjmAxXEgcvzMv9v3c0u9ivZVylWp7Z_pY3zyL9F8" # Log Book
-    url_csv_file = "https://docs.google.com/spreadsheet/ccc?key="+key+"&output=csv"
-    df = pd.read_csv(url_csv_file)
-    df = df[df.File_Number.isnull() == False]
-    for name in df.columns:
-        if name.startswith('Unnamed:'):
-            df=df.drop([name], axis=1)
-    isacomment = False
-    runp = df.File_Number[0]
-    for run in df.File_Number:
-    
-        if not run.isnumeric():
-            if isacomment == False and verbose: print("To Run {}".format(runp)) 
-            isacomment = True
-            if verbose: print ("--> General comment: {}".format(run))
-            index = df[df.File_Number==run].index[0]
-            df=df.drop([index], axis=0)
-        else:
-            if isacomment and verbose: print("From Run {}".format(run)); isacomment = False
-        runp = run
-    if verbose: print ('Variables: ', df.columns.values)
-    return df
-
-def read_cygno_sql_logbook(verbose=False):
     import requests
-    import pandas as pd
-    url = "http://lnf.infn.it/~mazzitel/php/cygno_sql_query.php"
-    r = requests.get(url, verify=False)
-    df = pd.read_json(url)
-    columns = ["varible", "value"]
+    if sql:
+        url = "http://lnf.infn.it/~mazzitel/php/cygno_sql_query.php"
+        r = requests.get(url, verify=False)
+        df = pd.read_json(url)
+        columns = ["varible", "value"]       
+    else:
+        key="1y7KhjmAxXEgcvzMv9v3c0u9ivZVylWp7Z_pY3zyL9F8" # Log Book
+        url_csv_file = "https://docs.google.com/spreadsheet/ccc?key="+key+"&output=csv"
+        df = pd.read_csv(url_csv_file)
+        df = df[df.File_Number.isnull() == False]
+        for name in df.columns:
+            if name.startswith('Unnamed:'):
+                df=df.drop([name], axis=1)
+        isacomment = False
+        runp = df.File_Number[0]
+        for run in df.File_Number:
+
+            if not run.isnumeric():
+                if isacomment == False and verbose: print("To Run {}".format(runp)) 
+                isacomment = True
+                if verbose: print ("--> General comment: {}".format(run))
+                index = df[df.File_Number==run].index[0]
+                df=df.drop([index], axis=0)
+            else:
+                if isacomment and verbose: print("From Run {}".format(run)); isacomment = False
+            runp = run
+        if verbose: print ('Variables: ', df.columns.values)
     return df
 
 def run_info_logbook(run, sql=True, verbose=False):
+    dataInfo=read_cygno_logbook(sql=sql,verbose=verbose)
     if sql:
-        dataInfo=read_cygno_sql_logbook(verbose=verbose)
         out = dataInfo[dataInfo['Run number']==run]
     else:
-        dataInfo=read_cygno_logbook(verbose=verbose)
         out =  dataInfo[dataInfo.File_Number==str(run)]
     if verbose: print(out.values)
     if len(out.values)==0:

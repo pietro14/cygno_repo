@@ -20,9 +20,10 @@ import json
 ########### Main #############
 ##############################
 def main():
-    parser = OptionParser(usage='usage: %prog\t [-ajv] run number')
+    parser = OptionParser(usage='usage: %prog\t [-ajgv] run number')
     parser.add_option('-a','--all', dest='all', action="store_true", default=False, help='all runs in the mysql DB;');
     parser.add_option('-j','--json', dest='json', action="store_true", default=False, help='json output;');
+    parser.add_option('-g','--google', dest='google', action="store_false", default=True, help='old google sheet;');
     parser.add_option('-v','--verbose', dest='verbose', action="store_true", default=False, help='verbose output;');
     (options, args) = parser.parse_args()
     #
@@ -30,27 +31,23 @@ def main():
         print(">> resquested arguments:", args)
         print(">> resquested options:", options)
     if options.all:
-        db = cy.read_cygno_sql_logbook(verbose=options.verbose)
-        
+        db = cy.read_cygno_logbook(sql=options.google, verbose=options.verbose)       
+
         for index, row in db.iterrows():
             if options.json:
-                print(json.dumps(row.to_json()))
-            
+                print(json.dumps(row.to_json()))          
             else:
                 print (row)
         return 0
-        
-        
+              
     if len(args) == 1:
-        db = cy.run_info_logbook(int(args[0]), sql=True, verbose=options.verbose)
+        db = cy.run_info_logbook(int(args[0]), sql=options.google, verbose=options.verbose)
         
         if options.json:
-            print(json.dumps(db.to_json()))
-            
+            print(json.dumps(db.to_json()))           
         else:
             for i, column in enumerate(db.columns):
                 print("{column}: {value}".format(column=column, value=db[column].values[0]))
-
     else:
         parser.error("run number missing")
 
