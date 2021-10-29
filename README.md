@@ -64,9 +64,37 @@ example:
       Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
       2021-10-17 10:03:21  test/s3_list.py
       
+## CYGNO CLI Tool *cygno_runs_info*
+
+	Usage: cygno_runs_info   [-jv] [run]
+
+	Options:
+  		-h, --help            show this help message and exit
+  		-j JSON, --json=JSON  json output;
+ 		-v, --verbose         verbose output;
+		
+example:
+
+	cygno_runs_info 5360
+		Run number: 5360
+		RunDescription: Long term stability test, PMT trigger (Majority 2, 5us veto), Global reset, long exposure (1 s), 55Fe source distance 26cm
+		Start time: 2021-10-26 11:41:00
+		Stop time: 2021-10-26 11:44:53
+		Number of events: 102.0
+		Exposure_sec: 1.0
+		OFFSET_V: 0.0
+		GEM3_V: 440.0
+		GEM2_V: 440.0
+		GEM1_V: 440.0
+		T2_V: 500.0
+		T1_V: 500.0
+		DRIFT_V: 840.0
+		HV_STATE: 1
+		GEMGeometry_id: 0
+
 ## CYGNO library tool
 
-### data
+### data class
 
 	class cfile:
 		def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
