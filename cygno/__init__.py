@@ -20,6 +20,7 @@
 # 
 
 __version__ = '1.0.1'
+__all__     = ["cmd", "his", "s3"]
 
 import numpy as np
 import glob, os
