@@ -31,33 +31,12 @@ from cygno import s3
 class myError(Exception):
     pass
 
-#
-# H5 file staff need h5py ##############
-#
-# def read_image_h5(file):
-#     # https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python#Reading_Data_from_HDF5_Files
-#     import numpy as np
-#     import h5py
-#     with h5py.File(file,'r') as hf:
-#         data = hf.get('Image')
-#         np_data = np.array(data)
-#     return np_data
-# 
-# def write_image_h5(file, m1):
-#     import numpy as np
-#     import h5py
-#  
-#     with h5py.File(file, 'w') as hf:
-#         hf.create_dataset('Image', data=m1)
-#     return
-# 
-
 
 #
 # CYGNO py ROOT Tools
 #
 
-def write2root(fname, img, id=0, option='update'):
+def write2root(fname, img, id=0, option='update', verbose=False):
     import ROOT
     tf = ROOT.TFile.Open(fname+'.root', option)
     img=img.T
@@ -69,7 +48,7 @@ def write2root(fname, img, id=0, option='update'):
     h2.Write()
     tf.Close()
     
-def TGraph2array(tgraph):
+def TGraph2array(tgraph, verbose=False):
     import ctypes
     xl = []; yl = []
     for i in range(tgraph.GetN()):
@@ -80,6 +59,17 @@ def TGraph2array(tgraph):
     x = np.array(xl)
     y = np.array(yl)
     return x, y
+
+def rootTH2byname(root_file, verbose=False):
+    pic = []
+    wfm = []
+    for i,e in enumerate(root_file.GetListOfKeys()):
+        che = e.GetName()
+        if ('pic_run' in str(che)):
+            pic.append(che)
+        elif ('wfm_run' in str(che)):
+            wfm.append(che)
+    return pic, wfm
     
 class cfile:
     def __init__(self, file, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution):
@@ -91,7 +81,7 @@ class cfile:
         self.x_resolution = x_resolution
         self.y_resolution = y_resolution
     
-def open_(run, tag='LAB', posix=False, verbose=True):
+def open_(run, tag='LAB', posix=False, verbose=False):
     import ROOT
     import root_numpy as rtnp
     class cfile:
@@ -105,7 +95,7 @@ def open_(run, tag='LAB', posix=False, verbose=True):
             self.y_resolution = y_resolution
     try:
         f=ROOT.TFile.Open(s3.root_file(run, tag, posix=posix))
-        pic, wfm = root_TH2_name(f)
+        pic, wfm = rootTH2byname(f)
         image = rtnp.hist2array(f.Get(pic[0])).T
         x_resolution = image.shape[1]
         y_resolution = image.shape[0]
@@ -123,28 +113,28 @@ def open_(run, tag='LAB', posix=False, verbose=True):
         print ('Camera X, Y pixel: {:d} {:d} '.format(x_resolution, y_resolution))
     return cfile(f, pic, wfm, max_pic, max_wfm, x_resolution, y_resolution)
 
-def pic_(cfile, iTr=0):
+def pic_(cfile, iTr=0, verbose=False):
     import ROOT
     import root_numpy as rtnp
-    pic, wfm = root_TH2_name(cfile.file)
+    pic, wfm = rootTH2byname(cfile.file)
     image = rtnp.hist2array(cfile.file.Get(pic[iTr])).T
     return image
 
-def wfm_(cfile, iTr=0, iWf=0):
+def wfm_(cfile, iTr=0, iWf=0, verbose=False):
     import ROOT
     import root_numpy as rtnp
     wfm_module=int(cfile.max_wfm/cfile.max_pic)
     if (iTr > cfile.max_pic) or (iWf > wfm_module):
         raise myError("track or wawform out of ragne {:d} {:d}".format(cfile.max_pic, wfm_module))
     i = iTr*wfm_module+iWf
-    pic, wfm = root_TH2_name(cfile.file)
+    pic, wfm = rootTH2byname(cfile.file)
     t,a = TGraph2array(cfile.file.Get(wfm[i]))
     return t,a
 
-def read_(f, iTr=0):
+def read_(f, iTr=0, verbose=False):
     import ROOT
     import root_numpy as rtnp
-    pic, wfm = root_TH2_name(f)
+    pic, wfm = rootTH2byname(f)
     image = rtnp.hist2array(f.Get(pic[iTr])).T
     return image
 
@@ -161,8 +151,7 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     import numpy as np
     import tqdm
     # funzione per fare i piedistalli se gia' non esistino nella diretory
-#    fileoutm = (path+"run%d_mean.h5" % (run))
-#    fileouts = (path+"run%d_sigma.h5" % (run))
+
     fileoutm = (path+"mean_Run{:05d}".format(run))
     fileouts = (path+"sigma_Run{:05d}".format(run))
 
@@ -241,25 +230,6 @@ def read_cygno_logbook(verbose=False):
     if verbose: print ('Variables: ', df.columns.values)
     return df
 
-#def read_cygno_run_sql_logbook(run, verbose=False):
-#    import requests
-#    import pandas as pd
-#    url = "http://lnf.infn.it/~mazzitel/php/cygno_sql_query.php?run="+str(run)
-#    # url = "http://www.lnf.infn.it/acceleratori/php/cygno_sql_query.php?run="+str(run)
-#
-#    r = requests.get(url, verify=False)
-#    data  = r.text.split("\n(\n    ")[-1].split('\n)\n')[0].split("\n    ")
-#
-#    columns = ["varible", "value"]
-#    df = pd.DataFrame(columns = columns)
-#
-#    for i, value in enumerate(data):
-#        dv = value.split(" => ")
-#        if verbose: print (dv[0][1:-1]+"\t\t"+dv[1])
-#        df  = df.append({columns[0]:dv[0][1:-1], columns[1]:dv[1]},
-#                    ignore_index=True)
-#    return df
-
 def read_cygno_sql_logbook(verbose=False):
     import requests
     import pandas as pd
@@ -284,17 +254,6 @@ def run_info_logbook(run, sql=True, verbose=False):
 #
 # ROOT cygno tool and image tool
 #
-def root_TH2_name(root_file):
-    pic = []
-    wfm = []
-    for i,e in enumerate(root_file.GetListOfKeys()):
-        che = e.GetName()
-        if ('pic_run' in str(che)):
-            pic.append(che)
-        elif ('wfm_run' in str(che)):
-            wfm.append(che)
-    return pic, wfm
-
 
 def cluster_par(xc, yc, image):
     ph = 0.
