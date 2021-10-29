@@ -20,8 +20,8 @@ import json
 ########### Main #############
 ##############################
 def main():
-    parser = OptionParser(usage='usage: %prog\t [-jv] run number')
-    parser.add_option('-a','--all', dest='all', action="store_true", default=False, help='sigle run nuber;');
+    parser = OptionParser(usage='usage: %prog\t [-ajv] run number')
+    parser.add_option('-a','--all', dest='all', action="store_true", default=False, help='all runs in the mysql DB;');
     parser.add_option('-j','--json', dest='json', action="store_true", default=False, help='json output;');
     parser.add_option('-v','--verbose', dest='verbose', action="store_true", default=False, help='verbose output;');
     (options, args) = parser.parse_args()
