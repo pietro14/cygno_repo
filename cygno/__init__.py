@@ -31,7 +31,6 @@ from cygno import s3
 class myError(Exception):
     pass
 
-
 #
 # CYGNO py ROOT Tools
 #
