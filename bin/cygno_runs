@@ -32,26 +32,30 @@ def main():
         print(">> resquested options:", options)
     if options.all:
         db = cy.read_cygno_logbook(sql=options.google, verbose=options.verbose)       
-
-        for index, row in db.iterrows():
-            if options.json:
-                print(json.dumps(row.to_json()))          
-            else:
-                print (row)
-        return 0
+        if options.verbose: print(">> ", db)
+        if len(db):
+            for index, row in db.iterrows():
+                if options.json:
+                    print(json.dumps(row.to_json()))          
+                else:
+                    print (row)
+            return 0
+        return 1
               
     if len(args) == 1:
         db = cy.run_info_logbook(int(args[0]), sql=options.google, verbose=options.verbose)
-        
-        if options.json:
-            print(json.dumps(db.to_json()))           
-        else:
-            for i, column in enumerate(db.columns):
-                print("{column}: {value}".format(column=column, value=db[column].values[0]))
+        if options.verbose: print(">> ", db)
+        if len(db):
+            if options.json:
+                print(json.dumps(db.to_json()))           
+            else:
+                for i, column in enumerate(db.columns):
+                    print("{column}: {value}".format(column=column, value=db[column].values[0]))
+            return 0
+        return 1
     else:
         parser.error("run number missing")
-
-    return 0
+        return 1
             
 if __name__ == "__main__":
     main()
