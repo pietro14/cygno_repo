@@ -20,6 +20,7 @@
 # 
 
 __version__ = '1.0.1'
+__all__     = ["cmd", "his", "s3"]
 
 import numpy as np
 import glob, os
@@ -29,6 +30,28 @@ from cygno import s3
 
 class myError(Exception):
     pass
+
+#
+# H5 file staff need h5py ##############
+#
+# def read_image_h5(file):
+#     # https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python#Reading_Data_from_HDF5_Files
+#     import numpy as np
+#     import h5py
+#     with h5py.File(file,'r') as hf:
+#         data = hf.get('Image')
+#         np_data = np.array(data)
+#     return np_data
+# 
+# def write_image_h5(file, m1):
+#     import numpy as np
+#     import h5py
+#  
+#     with h5py.File(file, 'w') as hf:
+#         hf.create_dataset('Image', data=m1)
+#     return
+# 
+
 
 #
 # CYGNO py ROOT Tools
@@ -68,7 +91,7 @@ class cfile:
         self.x_resolution = x_resolution
         self.y_resolution = y_resolution
     
-def open_(run, tag='LAB', posix=False, verbose=False):
+def open_(run, tag='LAB', posix=False, verbose=True):
     import ROOT
     import root_numpy as rtnp
     class cfile:
@@ -138,18 +161,18 @@ def ped_(run, path='./ped/', tag = 'LAB', posix=False, min_image_to_read = 0, ma
     import numpy as np
     import tqdm
     # funzione per fare i piedistalli se gia' non esistino nella diretory
-
+#    fileoutm = (path+"run%d_mean.h5" % (run))
+#    fileouts = (path+"run%d_sigma.h5" % (run))
     fileoutm = (path+"mean_Run{:05d}".format(run))
     fileouts = (path+"sigma_Run{:05d}".format(run))
 
-    if (os.path.exists(fileoutm+".root") and os.path.exists(fileouts+".root")): 
+    try: 
         # i file gia' esistono
-        
         m_image = read_(ROOT.TFile.Open(fileoutm+".root"))
         s_image = read_(ROOT.TFile.Open(fileouts+".root"))
         print("RELOAD maen file: {:s} sigma file: {:s}".format(fileoutm, fileouts))
         return m_image, s_image
-    else:
+    except:
         # i file non esistono crea il file delle medie e delle sigma per ogni pixel dell'immagine
         if verbose: print (">>> Pedestal Maker! <<<")
         try:
@@ -218,6 +241,24 @@ def read_cygno_logbook(verbose=False):
     if verbose: print ('Variables: ', df.columns.values)
     return df
 
+#def read_cygno_run_sql_logbook(run, verbose=False):
+#    import requests
+#    import pandas as pd
+#    url = "http://lnf.infn.it/~mazzitel/php/cygno_sql_query.php?run="+str(run)
+#    # url = "http://www.lnf.infn.it/acceleratori/php/cygno_sql_query.php?run="+str(run)
+#
+#    r = requests.get(url, verify=False)
+#    data  = r.text.split("\n(\n    ")[-1].split('\n)\n')[0].split("\n    ")
+#
+#    columns = ["varible", "value"]
+#    df = pd.DataFrame(columns = columns)
+#
+#    for i, value in enumerate(data):
+#        dv = value.split(" => ")
+#        if verbose: print (dv[0][1:-1]+"\t\t"+dv[1])
+#        df  = df.append({columns[0]:dv[0][1:-1], columns[1]:dv[1]},
+#                    ignore_index=True)
+#    return df
 
 def read_cygno_sql_logbook(verbose=False):
     import requests
