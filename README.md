@@ -66,12 +66,13 @@ example:
       
 ## CYGNO CLI Tool *cygno_runs_info*
 
-	Usage: cygno_runs_info   [-jv] [run]
-
+	Usage: cygno_runs_info   [-ajv] run number
+	
 	Options:
-  		-h, --help            show this help message and exit
-  		-j JSON, --json=JSON  json output;
- 		-v, --verbose         verbose output;
+	  -h, --help     show this help message and exit
+	  -a, --all      all runs in the mysql DB;
+	  -j, --json     json output;
+	  -v, --verbose  verbose output;
 		
 example:
 
