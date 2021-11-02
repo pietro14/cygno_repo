@@ -3,7 +3,7 @@
 
 install the CYGNO library:
 
-      pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
+      pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
 ## CYGNO CLI Tool *cygno_repo*
 
