@@ -1,7 +1,13 @@
 # CYGNO library
-tools to handle cygno repository, image, ecc.
+**tools to handle cygno repository, images, ecc.
+
+install the CYGNO library:
+
+      pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
 
 ## CYGNO CLI Tool *cygno_repo*
+
+requrments:
 
 * configure *oidc-agent* on your machine: https://codimd.web.cern.ch/s/SL-cWzDZB (DAQ setup, expert only https://codimd.web.cern.ch/s/_XqFfF_7V)
 * example for osx
@@ -13,7 +19,7 @@ tools to handle cygno repository, image, ecc.
 
 * install python library  (https://github.com/DODAS-TS/boto3sts): 
 
-      pip3 install -U git+https://github.com/DODAS-TS/boto3sts
+      pip3 install git+https://github.com/DODAS-TS/boto3sts
       
 * see https://boto3.amazonaws.com/v1/documentation/api/latest/index.html for S3 documentation
 
@@ -26,10 +32,6 @@ or refresh the token
  
       eval `oidc-agent`
       oidc-gen --reauthenticate --flow device infncloud-iam (if you alrady have the token)
-
-install the CYGNO library:
-
-      pip install -U git+https://github.com/gmazzitelli/cygno_repo.git
 
 usage
 
