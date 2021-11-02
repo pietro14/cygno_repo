@@ -1,5 +1,5 @@
 # CYGNO library
-**tools to handle cygno repository, images, ecc.
+*tools to handle cygno repository, images, ecc.*
 
 install the CYGNO library:
 
