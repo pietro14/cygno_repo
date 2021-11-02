@@ -64,34 +64,23 @@ example:
       Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
       2021-10-17 10:03:21  test/s3_list.py
       
-## CYGNO CLI Tool *cygno_runs_info*
+## CYGNO CLI Tool *cygno_runs*
 
-	Usage: cygno_runs_info   [-ajv] run number
-	
+	Usage: cygno_runs        [-ajgv] run number
+
 	Options:
 	  -h, --help     show this help message and exit
-	  -a, --all      all runs in the mysql DB;
+	  -a, --all      all runs in DBs;
 	  -j, --json     json output;
+	  -g, --google   old google sheet;
 	  -v, --verbose  verbose output;
 		
 example:
 
-	cygno_runs_info 5360
-		Run number: 5360
-		RunDescription: Long term stability test, PMT trigger (Majority 2, 5us veto), Global reset, long exposure (1 s), 55Fe source distance 26cm
-		Start time: 2021-10-26 11:41:00
-		Stop time: 2021-10-26 11:44:53
-		Number of events: 102.0
-		Exposure_sec: 1.0
-		OFFSET_V: 0.0
-		GEM3_V: 440.0
-		GEM2_V: 440.0
-		GEM1_V: 440.0
-		T2_V: 500.0
-		T1_V: 500.0
-		DRIFT_V: 840.0
-		HV_STATE: 1
-		GEMGeometry_id: 0
+	cygno_runs 826 -g (old logbook text output)
+	or 
+	cygno_runs 5360 -j (new logbook jesoen output)
+	cygno_runs -a (dump all the dadabase)
 
 ## CYGNO library tool
 
