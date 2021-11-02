@@ -7,7 +7,7 @@ install the CYGNO library:
 
 ## CYGNO CLI Tool *cygno_repo*
 
-requrments:
+requirements:
 
 * configure *oidc-agent* on your machine: https://codimd.web.cern.ch/s/SL-cWzDZB (DAQ setup, expert only https://codimd.web.cern.ch/s/_XqFfF_7V)
 * example for osx
