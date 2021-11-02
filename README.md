@@ -81,7 +81,7 @@ example:
 
 	cygno_runs 826 -g (old logbook text output)
 	or 
-	cygno_runs 5360 -j (new logbook jesoen output)
+	cygno_runs 5360 -j (new logbook json output)
 	cygno_runs -a (dump all the dadabase)
 
 ## CYGNO library tool
