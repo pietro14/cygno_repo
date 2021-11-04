@@ -65,6 +65,8 @@ example:
       removed file: s3_function.py
       Giovannis-MacBook-Air-2:script mazzitel$ cygno_repo ls cygno-sim -t test
       2021-10-17 10:03:21  test/s3_list.py
+
+Data are also shared in CYGNO CLOUD resources via the CYGNO application: https://notebook.cygno.cloud.infn.it:8888/ (jupyter notebook, python, root and terminal use dodasts/cygno-jupyter:v2.1 image) and availeble via web broser https://minio.cloud.infn.it/
       
 ## CYGNO CLI Tool *cygno_runs*
 
