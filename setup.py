@@ -17,7 +17,7 @@ setup(
         "Development Status :: 3 - Alpha",
         "Operating System :: OS Independent",
     ],
-    scripts=['bin/cygno_repo', 'bin/cygno_runs'],
+    scripts=['bin/cygno_repo', 'bin/cygno_runs', 'bin/his2root'],
     python_requires='>=3.5',
     install_requires=[
     'boto3',
