@@ -52,7 +52,7 @@ def main():
     else:
         path = args[0]
         for file in os.listdir(path):
-                if file.endswith(".HIS") and (file.startswith("run") or file.startswith("Run")
+                if file.endswith(".HIS") and (file.startswith("run") or file.startswith("Run")):
                     his_file = path+file
                     print (his_file)
                     filein, run = ruttalo(his_file)
