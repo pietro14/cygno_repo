@@ -15,14 +15,14 @@ from cygno import s3, his, cmd
 
 def ruttalo(his_file):
     stem, _ = os.path.splitext(his_file)
-    his = his.openHIS(his_file)
+    rh = his.openHIS(his_file)
     outname = stem+'.root' 
     rf = ROOT.TFile(outname,'recreate')
 
     runN = stem.split('run')[-1]
     run = runN if len(runN) else 'XXXX'
 
-    for idx, section in enumerate(his):
+    for idx, section in enumerate(rh):
         if idx % 5 == 0: print("transferring image ",idx)
         (nx,ny) = section.shape 
         title = stem + ('_%04d' % idx)
@@ -39,6 +39,8 @@ def ruttalo(his_file):
 
 
 def main():
+    from optparse import OptionParser
+
     parser = OptionParser(usage='usage: %prog\t [-d] DIRECTORY')
     parser.add_option('-d','--delete', dest='delete', action="store_true", default=False, help='delete HIS file;');
     parser.add_option('-v','--verbose', dest='verbose', action="store_true", default=False, help='verbose output;');
