@@ -10,7 +10,7 @@
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
-appunti di viaggio (reistallazione su iMac intel e istallazione su Air M1):
+appunti di viaggio (CERN ROOT reistallazione su iMac intel e istallazione su Air M1 attarverso homebrew):
 
 intel:
 
