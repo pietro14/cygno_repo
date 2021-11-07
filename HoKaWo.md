@@ -6,7 +6,7 @@
 
         cygno_his2root -d /workarea/cloud-storage/cygno-analysis/hroot (-d cancella i file HIS dopo la conversione)
   
-* se il comando non e' dispobile istllare le librerie 
+* se il comando non e' dispobile instllare le librerie 
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
