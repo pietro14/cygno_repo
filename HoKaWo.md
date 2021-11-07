@@ -9,3 +9,4 @@
 * se il comando non e' dispobile istllare le librerie 
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
+
