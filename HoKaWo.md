@@ -28,7 +28,7 @@ M1:
         brew install root
         pip3 install jupyter
 
-il problema e' che dalla 3.7 non esiste piu' root_numpy
+il problema e' che dalla 3.7 non esiste piu' root_numpy (vedi https://github.com/scikit-hep/root_numpy/tree/master/root_numpy)
 
 per far partire juputer notebook usare 
 
