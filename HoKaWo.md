@@ -27,9 +27,10 @@ M1:
         brew install python
         brew install root
         pip3 install jupyter
+        rehash (zsh e' duro d'orecchie)
 
 il problema e' che dalla 3.7 non esiste piu' root_numpy (vedi https://github.com/scikit-hep/root_numpy/tree/master/root_numpy)
 
 per far partire juputer notebook usare 
 
-        python3 -m notebook
+        python3 -m notebook (o jupyer notebook come al solito)
