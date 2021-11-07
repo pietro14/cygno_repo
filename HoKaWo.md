@@ -10,16 +10,23 @@
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
-appunti di viaggio:
+appunti di viaggio (reistallazione su iMac intel e istallazione su Air M1):
+
+intel:
 
         brew uninstall root
         brew uninstall --ignore-dependencies python3
         ls -l /usr/local/bin/python* (per controllare che abbai rimosso i link)
         brew list python
+        pip3 install jupyter
+        brew link --overwrite gcc (per il proiblema del ImportError: dlopen(/Users/rock/laugh/laugh-finder/python-training/laughenv/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-darwin.so, 2): Symbol not found: ___addtf3)
+
+M1:
+
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
         brew install python
         brew install root
         pip3 install jupyter
-        brew link --overwrite gcc (per il proiblema del ImportError: dlopen(/Users/rock/laugh/laugh-finder/python-training/laughenv/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-darwin.so, 2): Symbol not found: ___addtf3)
 
 il problema e' che dalla 3.7 non esiste piu' root_numpy
 
