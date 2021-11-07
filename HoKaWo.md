@@ -22,3 +22,7 @@ appunti di viaggio:
         brew link --overwrite gcc (per il proiblema del ImportError: dlopen(/Users/rock/laugh/laugh-finder/python-training/laughenv/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-darwin.so, 2): Symbol not found: ___addtf3)
 
 il problema e' che dalla 3.7 non esiste piu' root_numpy
+
+per far partire juputer notebook usare 
+
+        python3 -m notebook
