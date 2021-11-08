@@ -40,10 +40,19 @@ def backet_list(tag, bucket='cygno-sim', session="infncloud-iam", verbose=False)
     aws_session = creds.assumed_session(session)
     s3 = aws_session.client('s3', endpoint_url=endpoint,
                             config=boto3.session.Config(signature_version=version),verify=True)
-    response = s3.list_objects(Bucket=bucket)['Contents']
-    for i, file in enumerate(response):
-        if key in str(file['Key']):
-            print("{0:20s} {1:s}".format(str(file['LastModified']).split(".")[0].split("+")[0], file['Key']))
+    IsTruncated = True
+    NextMarker  = ''
+    while IsTruncated:
+        response    = s3.list_objects(Bucket=bucket, Marker=NextMarker)
+        IsTruncated = response['IsTruncated']
+        contents = response['Contents']
+        for i, file in enumerate(contents):
+            if key in str(file['Key']):
+                print("{0:20s} {1:s}".format(str(file['LastModified']).split(".")[0].split("+")[0], file['Key']))
+        if IsTruncated:
+            Marker      = response['Marker']
+            NextMarker  = response['NextMarker']
+        if verbose: print("backet troncato? "+str(IsTruncated),"Marker: ", Marker,"NextMarker: ", NextMarker)
 
 def obj_put(filename, tag, bucket='cygno-sim', session="infncloud-iam", verbose=False):
     # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-uploading-files.html#uploading-files
