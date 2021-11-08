@@ -5,7 +5,14 @@ install the CYGNO library:
 
       pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
+requirements:
+* Pyroot: https://root.cern/manual/python/ 
+* oidc-agent
+* boto3sts
+
 ## CYGNO CLI Tool *cygno_repo*
+
+tool to operate on CYGNO backet in S3 exeperiment repository
 
 requirements:
 
@@ -69,6 +76,8 @@ example:
 Data are also shared in CYGNO CLOUD resources via the CYGNO application: https://notebook.cygno.cloud.infn.it:8888/ (jupyter notebook, python, root and terminal use dodasts/cygno-jupyter:v2.1 image) and availeble via web broser https://minio.cloud.infn.it/
       
 ## CYGNO CLI Tool *cygno_runs*
+
+tool to show runs infromation stored in the logbook
 
 	Usage: cygno_runs        [-ajgv] run number
 
