@@ -26,7 +26,7 @@ requirements:
 before run the script carte the iam token:
 
       eval `oidc-agent`
-      oidc-token infncloud-iam (only first time)
+      oidc-token infncloud-iam (to see ypur active token)
  
 or refresh the token
  
