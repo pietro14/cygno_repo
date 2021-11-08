@@ -26,7 +26,7 @@ requirements:
 before run the script carte the iam token:
 
       eval `oidc-agent`
-      oidc-token infncloud-iam (to see your active token)
+      oidc-token infncloud-iam (to generate or see your active token)
  
 or refresh the token
  
