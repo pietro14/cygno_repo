@@ -28,7 +28,7 @@ setup(
     'requests',
     'matplotlib',
 #    'ROOT',
-#    'root_numpy',
+    'root_numpy',
     'tqdm'
    ]
 )
