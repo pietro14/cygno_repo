@@ -85,6 +85,19 @@ example:
 	or 
 	cygno_runs 5360 -j (new logbook json output)
 	cygno_runs -a (dump all the dadabase)
+	
+	
+## CYGNO CLI Tool *cygno_his2root*
+
+convert HIS HoKaWo output file in CYGNO root histograms data files
+
+	Usage: cygno_his2root	 [-d] DIRECTORY
+	
+	Options:
+	  -h, --help     show this help message and exit
+	  -d, --delete   delete HIS file after conversion;
+	  -v, --verbose  verbose output;
+
 
 ## CYGNO library tool
 
