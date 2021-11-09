@@ -13,10 +13,14 @@
 * una volta partito aprire un terminale (in alto a destra) e eseguire il comando:
 
         cygno_his2root -d /workarea/cloud-storage/cygno-analysis/hroot (-d cancella i file HIS dopo la conversione)
+        o
+        cygno_his2root -d -f /workarea/cloud-storage/cygno-analysis/hroot/RunXXXXX.HIS (per il singolo file)
   
 * se il comando non e' dispobile instllare le librerie 
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
+
+* per spostarli nel foledr data lo devono fare Eamanule, Giulia o Giovanni
 
 ### appunti di viaggio (CERN ROOT reistallazione su iMac intel e istallazione su Air M1 attarverso homebrew):
 
