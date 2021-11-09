@@ -27,7 +27,6 @@ setup(
     'botocore',
     'requests',
     'matplotlib',
-#    'ROOT',
     'root_numpy',
     'tqdm'
    ]

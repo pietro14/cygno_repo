@@ -36,13 +36,12 @@ def ruttalo(his_file):
     rf.Close()
     return outname, run
 
-
-
 def main():
     from optparse import OptionParser
 
-    parser = OptionParser(usage='usage: %prog\t [-d] DIRECTORY')
-    parser.add_option('-d','--delete', dest='delete', action="store_true", default=False, help='delete HIS file;');
+    parser = OptionParser(usage='usage: %prog\t [-d] DIRECTORY/FILEPATH')
+    parser.add_option('-f','--file', dest='file', action="store_true", default=False, help='convert sigle HIS file;');
+    parser.add_option('-d','--delete', dest='delete', action="store_true", default=False, help='delete HIS file after convertion;');
     parser.add_option('-v','--verbose', dest='verbose', action="store_true", default=False, help='verbose output;');
     (options, args) = parser.parse_args()
     #
@@ -53,28 +52,30 @@ def main():
         parser.error("incorrect number of arguments")
     else:
         path = args[0]
-        for file in os.listdir(path):
-                if file.endswith(".HIS") and (file.startswith("run") or file.startswith("Run")):
-                    his_file = path+file
-                    print (his_file)
-                    filein, run = ruttalo(his_file)
-                    fileout = 'histograms_Run{run}.root'.format(run=run)
-                    cmd.append2file(fileout, path+'/daq_rooted.log')
-                    print ("file {} done".format(fileout))
-                    # cmd.mv_file(filein, path+fileout)
-                    # os.chdir(path)
-                    # swift_put(fileout)
-                    # append2file(fileout, path+'/daq_copyed.log')
-                    # print ("file {} copied".format(fileout))
-                    if options.delete: 
-                        cmd.rm_file(his_file)
-                        print ("file {} removed".format(his_file))
-                    # rm_file(fileout)
-                    # print ("file {} removed".format(fileout))
-        
-        print("ALL DONE")
-
-                                      
+        if options.file:
+            if path.endswith(".HIS"):
+                if options.verbose: print("file: {}".format(path))
+                filein, run = ruttalo(path)
+                fileout = 'histograms_Run{run}.root'.format(run=run)
+                print ("file {} done".format(fileout))
+                if options.delete: 
+                    cmd.rm_file(path)
+                    print ("file {} removed".format(path))
+        else:
+            for file in os.listdir(path):
+                    if file.endswith(".HIS") and (file.startswith("run") or file.startswith("Run")):
+                        his_file = path+file
+                        print (his_file)
+                        filein, run = ruttalo(his_file)
+                        fileout = 'histograms_Run{run}.root'.format(run=run)
+                        cmd.append2file(fileout, path+'/daq_rooted.log')
+                        print ("file {} done".format(fileout))
+                        if options.delete: 
+                            cmd.rm_file(his_file)
+                            print ("file {} removed".format(his_file))
+            
+            print("ALL DONE")
+                                
                                       
 if __name__ == "__main__":
     main()
