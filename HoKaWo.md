@@ -1,8 +1,8 @@
 ### istruzioni per convertire e mettere in cloud i file HIS di HoKaWo.
 
-* dal pc windows aprire winscp e mettere i file HIS nel folder /media/cygno/hroot/WIN/
+* dal pc windows aprire WINSCP (cygno@192.168.1.143) e mettere i file HIS nel folder /media/cygno/hroot/WIN/
 * i file saranno automaticamente trasformati in CYGNO root histograms e inviati in cloud
-* WARNING: i file si devono ncessariamente chimare **RunXXXXX.HIS**
+* WARNING: i file si devono ncessariamente chimare **RunXXXXX.HIS** con la **R** maiuscola **5 cifre** e **HIS** maiuscolo!
 
 
 
