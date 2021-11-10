@@ -22,27 +22,7 @@
 
 * per spostarli nel foledr data lo devono fare Eamanule, Giulia o Giovanni
 
-### appunti di viaggio (CERN ROOT reistallazione su iMac intel e istallazione su Air M1 attarverso homebrew):
+### processi ###
 
-intel:
+        nohup ~/DAQ/offline/hroot2cloud_loop.sh  > /media/cygno/hroot/hroot2cloud_loop.log 2>&1 &
 
-        brew uninstall root
-        brew uninstall --ignore-dependencies python3
-        ls -l /usr/local/bin/python* (per controllare che abbai rimosso i link)
-        brew list python
-        pip3 install jupyter
-        brew link --overwrite gcc (per il proiblema del ImportError: dlopen(/Users/rock/laugh/laugh-finder/python-training/laughenv/lib/python3.6/site-packages/scipy/linalg/_fblas.cpython-36m-darwin.so, 2): Symbol not found: ___addtf3)
-
-M1:
-
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        brew install python
-        brew install root
-        pip3 install jupyter
-        rehash (zsh e' duro d'orecchie)
-
-il problema e' che dalla 3.7 non esiste piu' root_numpy (vedi https://github.com/scikit-hep/root_numpy/tree/master/root_numpy)
-
-per far partire juputer notebook usare 
-
-        python3 -m notebook (o jupyer notebook come al solito)
