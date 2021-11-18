@@ -13,4 +13,5 @@ if you need to access LNF LAN via OpenVPN install the infn-user profile
 * send an email to: giovanni.mazzitelli@lnf.infn.it to be autorized
 
 ### Computing resources and OPEN VPN @ LNGS
+* install the profile https://www.lngs.infn.it/en/vpn
 * send an email to: giovanni.mazzitelli@lnf.infn.it to be autorized
