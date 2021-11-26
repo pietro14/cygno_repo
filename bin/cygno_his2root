@@ -13,17 +13,24 @@ from root_numpy import array2hist
 from cygno import s3, his, cmd
 
 
-def ruttalo(his_file):
+def ruttalo(his_file, verbose=False):
     stem, _ = os.path.splitext(his_file)
-    rh = his.openHIS(his_file)
     outname = stem+'.root' 
+    fpath, fname = os.path.split(his_file)
+    
+    rh = his.openHIS(his_file)
+
     rf = ROOT.TFile(outname,'recreate')
-
-    runN = stem.split('run')[-1]
+    if (verbose): print("HIS: ", his_file, "ROOT: ", outname)
+        
+    fname, _ = os.path.splitext(fname)
+    runN = fname.split('run')[-1] if 'run' in fname else fname.split('Run')[-1]
     run = runN if len(runN) else 'XXXX'
-
+    
+    if (verbose): print("RUN: ", run)
+        
     for idx, section in enumerate(rh):
-        if idx % 5 == 0: print("transferring image ",idx)
+        if idx % 10 == 0: print("transferring image ",idx)
         (nx,ny) = section.shape 
         title = stem + ('_%04d' % idx)
         postfix = 'run{run}_ev{ev}'.format(run=run,ev=idx)
@@ -55,7 +62,7 @@ def main():
         if options.file:
             if path.endswith(".HIS"):
                 if options.verbose: print("file: {}".format(path))
-                filein, run = ruttalo(path)
+                filein, run = ruttalo(path, options.verbose)
                 fileout = 'histograms_Run{run}.root'.format(run=run)
                 print ("file {} done".format(fileout))
                 if options.delete: 

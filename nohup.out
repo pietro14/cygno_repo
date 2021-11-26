@@ -1,0 +1,56 @@
+[W 18:07:51.902 NotebookApp] Error loading server extension jupyter_http_over_ws
+    Traceback (most recent call last):
+      File "/usr/local/lib/python3.9/site-packages/notebook/notebookapp.py", line 2027, in init_server_extensions
+        mod = importlib.import_module(modulename)
+      File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/importlib/__init__.py", line 127, in import_module
+        return _bootstrap._gcd_import(name[level:], package, level)
+      File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+      File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+      File "<frozen importlib._bootstrap>", line 984, in _find_and_load_unlocked
+    ModuleNotFoundError: No module named 'jupyter_http_over_ws'
+[I 18:07:51.947 NotebookApp] Serving notebooks from local directory: /Users/mazzitel/Dropbox/GR2/soft
+[I 18:07:51.947 NotebookApp] Jupyter Notebook 6.4.5 is running at:
+[I 18:07:51.947 NotebookApp] http://macmazzitelli.lnf.infn.it:8999/?token=%3Cgenerated%3E
+[I 18:07:51.947 NotebookApp]  or http://127.0.0.1:8999/?token=%3Cgenerated%3E
+[I 18:07:51.947 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 18:07:51.985 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///Users/mazzitel/Library/Jupyter/runtime/nbserver-1244-open.html
+    Or copy and paste one of these URLs:
+        http://macmazzitelli.lnf.infn.it:8999/?token=%3Cgenerated%3E
+     or http://127.0.0.1:8999/?token=%3Cgenerated%3E
+[I 18:15:01.217 NotebookApp] 302 GET / (10.15.2.8) 0.270000ms
+[I 15:36:15.445 NotebookApp] 302 GET / (10.15.2.3) 0.250000ms
+[I 16:00:16.384 NotebookApp] Saving file at /script/cygno_repo/bin/cygno_his2root
+[I 16:01:01.536 NotebookApp] Saving file at /script/cygno_repo/bin/cygno_his2root
+[I 16:01:46.129 NotebookApp] Saving file at /script/cygno_repo/bin/cygno_his2root
+[I 16:02:23.570 NotebookApp] New terminal with automatic name: 1
+ERROR:terminado.websocket:not able to serialize: expected string or bytes-like object
+[I 16:05:50.867 NotebookApp] New terminal with automatic name: 2
+ERROR:terminado.websocket:not able to serialize: expected string or bytes-like object
+[W 16:14:23.539 NotebookApp] Notebook cygno_cloud/display.ipynb is not trusted
+ERROR:asyncio:Exception in callback <TaskWakeupMethWrapper object at 0x10a0e3e50>(<Future finis...2536\r\n\r\n'>)
+handle: <Handle <TaskWakeupMethWrapper object at 0x10a0e3e50>(<Future finis...2536\r\n\r\n'>)>
+Traceback (most recent call last):
+  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+RuntimeError: Cannot enter into task <Task pending name='Task-638' coro=<HTTP1ServerConnection._server_request_loop() running at /usr/local/lib/python3.9/site-packages/tornado/http1connection.py:823> wait_for=<Future finished result=b'GET /api/co...52536\r\n\r\n'> cb=[IOLoop.add_future.<locals>.<lambda>() at /usr/local/lib/python3.9/site-packages/tornado/ioloop.py:688]> while another task <Task pending name='Task-2' coro=<KernelManager._async_start_kernel() running at /usr/local/lib/python3.9/site-packages/jupyter_client/manager.py:332>> is being executed.
+ERROR:asyncio:Exception in callback <TaskWakeupMethWrapper object at 0x10a09dee0>(<Future finis...2536\r\n\r\n'>)
+handle: <Handle <TaskWakeupMethWrapper object at 0x10a09dee0>(<Future finis...2536\r\n\r\n'>)>
+Traceback (most recent call last):
+  File "/usr/local/Cellar/python@3.9/3.9.7_1/Frameworks/Python.framework/Versions/3.9/lib/python3.9/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+RuntimeError: Cannot enter into task <Task pending name='Task-637' coro=<HTTP1ServerConnection._server_request_loop() running at /usr/local/lib/python3.9/site-packages/tornado/http1connection.py:823> wait_for=<Future finished result=b'GET /kernel...52536\r\n\r\n'> cb=[IOLoop.add_future.<locals>.<lambda>() at /usr/local/lib/python3.9/site-packages/tornado/ioloop.py:688]> while another task <Task pending name='Task-650' coro=<MappingKernelManager.start_kernel() running at /usr/local/lib/python3.9/site-packages/notebook/services/kernels/kernelmanager.py:176> cb=[IOLoop.add_future.<locals>.<lambda>() at /usr/local/lib/python3.9/site-packages/tornado/ioloop.py:688]> is being executed.
+[I 16:14:26.292 NotebookApp] Kernel started: c4dfb603-f130-4277-a5c5-be68d7f9f81d, name: python3
+[I 16:14:37.759 NotebookApp] Starting buffering for c4dfb603-f130-4277-a5c5-be68d7f9f81d:948ecb22796d4c9badb9a88e3c7c3c9a
+[I 16:14:46.401 NotebookApp] Kernel shutdown: c4dfb603-f130-4277-a5c5-be68d7f9f81d
+[I 16:15:07.752 NotebookApp] Kernel started: 8551a2ef-82bd-4891-8b3b-8f7e863392bf, name: python3
+Unable to revert mtime: /Library/Fonts
+Fontconfig warning: ignoring UTF-8: not a valid region tag
+[I 16:17:13.392 NotebookApp] Saving file at /display/eventDisplay.ipynb
+[I 16:19:12.683 NotebookApp] Saving file at /display/eventDisplay.ipynb
+[I 16:21:10.253 NotebookApp] Saving file at /script/cygno_repo/bin/cygno_his2root
+[I 16:23:43.753 NotebookApp] Saving file at /script/cygno_repo/bin/cygno_his2root
+[I 16:25:13.559 NotebookApp] Saving file at /display/eventDisplay.ipynb
+[I 16:27:12.498 NotebookApp] Saving file at /display/eventDisplay.ipynb
