@@ -30,7 +30,7 @@ requirements:
       
 * see https://boto3.amazonaws.com/v1/documentation/api/latest/index.html for S3 documentation
 
-before run the script carte the iam token:
+before run the script crate the iam token:
 
       eval `oidc-agent`
       oidc-token infncloud-iam (to generate or see your active token)
