@@ -5,11 +5,35 @@
 * WARNING: i file si devono ncessariamente chimare **RunXXXXX.HIS** con la **R** maiuscola **5 cifre** e **HIS** maiuscolo!
 
 
-### processi ###
+### processi (expert only) ###
 
 contemporanememte sul PC del DAQ Linux deve girare il processo:
 
         nohup ~/DAQ/offline/hroot2cloud_loop.sh  > /media/cygno/hroot/hroot2cloud_loop.log 2>&1 &
+        
+il relativi log files sono conenuti nel folder:
+
+        /media/cygno/hroot/
+
+* daq_converted_HIS_err.log
+* daq_converted_HIS.log - files HIS converted in ROOT
+* daq_converted.log - files ROOT converted in HROOT
+* daq_stored_HIS_err.log
+* daq_stored_HIS.log - files HIS converted in ROOT stored on cloud
+* daq_stored.log - files ROOT converted in HROOT stored on cloud
+* his2hroot2cloud.log
+* mid2hroot2cloud.log
+
+tools, lo script **copyupload.sh** copia file da un disco locale per numero di run e li mette in cloud resattando le storie relative 
+
+controllare un file  convertito o storato nei log:
+
+        run=05790; grep $run daq_converted_HIS.log; grep $run daq_stored_HIS.log
+        
+resettare il log per un file convertito o storato:
+
+        run=05790; cp *.log bck/ ; grep -v $run bck/daq_converted_HIS.log > daq_converted_HIS.log; grep -v $run bck/daq_stored_HIS.log > daq_stored_HIS.log
+
 
 #### OLD (ma sepre valido)
 
