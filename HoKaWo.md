@@ -34,6 +34,7 @@ resettare il log per un file convertito o storato:
 
         run=05790; cp *.log bck/ ; grep -v $run bck/daq_converted_HIS.log > daq_converted_HIS.log; grep -v $run bck/daq_stored_HIS.log > daq_stored_HIS.log
 
+perche' il progamma rifaccia la conversione e il backup e' necessario che i file non siano gia' presenti nei log
 
 #### OLD (ma sepre valido)
 
