@@ -5,6 +5,11 @@
 * WARNING: i file si devono ncessariamente chimare **RunXXXXX.HIS** con la **R** maiuscola **5 cifre** e **HIS** maiuscolo!
 
 
+### processi ###
+
+contemporanememte sul PC del DAQ Linux deve girare il processo:
+
+        nohup ~/DAQ/offline/hroot2cloud_loop.sh  > /media/cygno/hroot/hroot2cloud_loop.log 2>&1 &
 
 #### OLD (ma sepre valido)
 
@@ -20,9 +25,4 @@
 
         pip install git+https://github.com/gmazzitelli/cygno_repo.git
 
-* per spostarli nel foledr data lo devono fare Eamanule, Giulia o Giovanni
-
-### processi ###
-
-        nohup ~/DAQ/offline/hroot2cloud_loop.sh  > /media/cygno/hroot/hroot2cloud_loop.log 2>&1 &
-
+* per spostarli nel folder data lo devono fare Eamanule, Giulia o Giovanni
